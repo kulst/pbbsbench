@@ -156,20 +156,21 @@ void check_delaunay(sequence<triang_t> &Triangles, size_t boundary_size) {
   size_t n = Triangles.size();
   sequence<size_t> boundary_count(n, 0);
   parallel_for (0, n, [&] (size_t i) {
-    if (Triangles[i].initialized >= 0) {
-      simplex_t t = simplex(&Triangles[i], 0);
-      for (int i=0; i < 3; i++) {
-	simplex_t a = t.across();
-	if (a.valid()) {
-	  vertex_t* v = a.rotClockwise().firstVertex();
-	  if (!t.outside(v)) {
-	    cout << "Inside Out: "; v->pt.print(); t.print();}
-	  if (t.inCirc(v)) {
-	    cout << "In Circle Violation: "; v->pt.print(); t.print(); }
-	} else boundary_count[i]++;
-	t = t.rotClockwise();
+    simplex_t t = simplex(&Triangles[i], 0);
+    for (int i=0; i < 3; i++) {
+        simplex_t a = t.across();
+        if (a.valid()) {
+          vertex_t* v = a.rotClockwise().firstVertex();
+            if (!t.outside(v)) {
+              cout << "Inside Out: "; v->pt.print(); t.print();
+            }
+            if (t.inCirc(v)) {
+              cout << "In Circle Violation: "; v->pt.print(); t.print();
+            }
+        } else boundary_count[i]++;
+        t = t.rotClockwise();
       }
-    } });
+    });
   if (boundary_size != reduce(boundary_count))
     cout << "Wrong boundary size: should be " << boundary_size 
 	 << " is " << reduce(boundary_count) << endl;
