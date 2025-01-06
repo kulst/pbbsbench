@@ -39,7 +39,7 @@ void sample_sort_(Range in, Range out, Less less, bool stable=false, int level=1
   if (n <= cutoff || (level > 2)) { // && n <= 1 << 17)) {
     //return;
     if (in.begin() != out.begin())
-      parlay::uninitialized_relocate_n(out.begin(), in.begin(), n);
+      parlay::uninitialized_relocate_n(in.begin(), n, out.begin());
     if (stable)
       std::stable_sort(out.begin(), out.end(), less);
     else
@@ -104,7 +104,7 @@ void sample_sort_(Range in, Range out, Less less, bool stable=false, int level=1
     if (i == 0 || i == num_buckets - 1 || less(pivots[i-1], pivots[i]))
       sample_sort_<parlay::uninitialized_relocate_tag>(keys_slice.cut(first,last), out.cut(first,last),
 						       less, stable, level+1);
-    else parlay::uninitialized_relocate_n(out.begin()+first, keys_slice.begin()+first, last-first);
+    else parlay::uninitialized_relocate_n(keys_slice.begin()+first, last - first, out.begin()+first);
   }, 1);
 }
 
