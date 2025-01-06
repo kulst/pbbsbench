@@ -12,7 +12,7 @@ tests = [
     ["integerSort/parallelRadixSort",True,0],
     ["integerSort/serialRadixSort",False,0],
 
-    ["comparisonSort/sampleSort",True,0],
+    ["comparisonSort/sampleSort",True,0], # compiler error due to changes in relocation could be fixed
     ["comparisonSort/quickSort",True,1],
     ["comparisonSort/mergeSort",True,1],
     ["comparisonSort/stableSampleSort",True,1],
@@ -21,7 +21,7 @@ tests = [
 
     ["removeDuplicates/serial_hash", False,0],
     ["removeDuplicates/serial_sort", False,1],
-    ["removeDuplicates/parlayhash", True,0],
+    ["removeDuplicates/parlayhash", True,0], # runtime error with -O3, no error after pulling last parlaylib 
 
     ["histogram/sequential",False,0],
     ["histogram/parallel",True,0],
@@ -50,14 +50,14 @@ tests = [
     ["spanningForest/serialST",False,0],
 
     ["breadthFirstSearch/simpleBFS",True,1],
-    ["breadthFirstSearch/backForwardBFS",True,0],
+    ["breadthFirstSearch/backForwardBFS",True,0], #runtime error with -O1 or higher
     ["breadthFirstSearch/deterministicBFS",True,1],
     ["breadthFirstSearch/serialBFS",False,0],
 
     ["maximalMatching/serialMatching",False,0],
     ["maximalMatching/incrementalMatching",True,0],
 
-    ["maximalIndependentSet/incrementalMIS",True,0],
+    ["maximalIndependentSet/incrementalMIS",True,0], #compiler error from OpenCilk, no error after pulling last parlay
     ["maximalIndependentSet/ndMIS",True,1],
     ["maximalIndependentSet/serialMIS",False,0],
 
@@ -72,7 +72,7 @@ tests = [
 
     ["delaunayRefine/incrementalRefine",True,0],
     
-    ["rangeQuery2d/parallelPlaneSweep",True,0],
+    ["rangeQuery2d/parallelPlaneSweep",True,0], #compiler errors are thrown, no errors after checking out master from PAM
     ["rangeQuery2d/serial",False,0],
 
     ["nBody/parallelCK",True,0],
